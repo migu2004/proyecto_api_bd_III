@@ -1,11 +1,10 @@
-from pydantic import BaseModel, Field
-from typing import Optional
+from pydantic import BaseModel, Field, ConfigDict
 
 class CursoBase(BaseModel):
-    titulo: str = Field(..., example="Introducción a FastAPI")
-    categoria: str = Field(..., example="Programación")
-    instructor: str = Field(..., example="Profesor Turing")
-    duracion_horas: int = Field(..., example=20)
+    titulo: str = Field(..., json_schema_extra={"example": "Introducción a FastAPI"})
+    categoria: str = Field(..., json_schema_extra={"example": "Programación"})
+    instructor: str = Field(..., json_schema_extra={"example": "Profesor Turing"})
+    duracion_horas: int = Field(..., json_schema_extra={"example": 20})
     activo: bool = Field(default=True)
 
 class CursoCreate(CursoBase):
@@ -13,6 +12,4 @@ class CursoCreate(CursoBase):
 
 class CursoResponse(CursoBase):
     id: str
-
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
